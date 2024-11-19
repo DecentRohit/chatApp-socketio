@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 dotenv.config();
 
 const Url = process.env.Url;
-export const connectUsingMongoose = async ()=>{
+const connectUsingMongoose = async ()=>{
     try{
         await  mongoose.connect(Url)
      console.log("connected using mongoose")
@@ -13,3 +13,4 @@ export const connectUsingMongoose = async ()=>{
       
  }
  }
+module.exports = connectUsingMongoose;
