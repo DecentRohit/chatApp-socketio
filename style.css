@@ -1,0 +1,23 @@
+#container{
+   text-align: center;
+   width: 500px;
+   height: 600px;
+   background-color: aquamarine;
+}
+#chatter{
+    width: 100%;
+    height: 10%;
+    background-color: rgb(178, 83, 83);
+    text-align:inherit;
+  
+}
+#msgArea{
+    width: 100%;
+    height: 80%;
+    background-color: bisque;
+}
+#sendMsg {
+    width: 100%;
+    height: 10%;
+    background-color: rgb(186, 221, 221);
+}

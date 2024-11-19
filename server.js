@@ -1,6 +1,6 @@
 const app = require('./index'); // Import the app from index.js
 const dotenv = require('dotenv');
-const connectUsingMongoose  = require('./config/mongoose');
+const {connectUsingMongoose } = require('./config/mongoose');
 
 
 // Load environment variables from a `.env` file if available
