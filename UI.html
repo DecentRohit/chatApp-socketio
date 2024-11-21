@@ -16,9 +16,12 @@
         </div>
         <div id="msgArea"></div>
         <div id="sendMsg">
-         
-                <input id="typedMsg" name="msg">
-                <button id="sent">Send</button>
+            <form>
+                <label for="typedMsg">Start text</label>
+                <input id="typedMsg" name="msg" placeholder="type msg to send">
+                <button id="sent" type="submit">Send</button>
+            </form>
+          
         </div>
     </div>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>

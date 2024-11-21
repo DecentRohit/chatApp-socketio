@@ -6,8 +6,10 @@ const app = express();
 const cors = require('cors');
 const {Server }= require('socket.io')
 const {getdb } = require('./config/mongoose');
+const Chat = require('./schema/chatSchema')
 const PORT = process.env.PORT;
-const http = require('http')
+const http = require('http');
+const { timeStamp } = require('console');
 const server = http.createServer(app);
 
 
@@ -28,9 +30,23 @@ const io = new Server(server, {
 io.on('connection', (socket)=>{
     console.log("Connection is established");
 
-    io.on('join' , (name)=>{
-        socket.broadcast.emit('userJoined')
+    socket.on('join' , (username)=>{
+        socket.user = username;
+
+        socket.broadcast.emit('userJoined' , username)
     })
+    socket.on('message' ,(msg) =>{
+    let userDetails = {
+        name : socket.user ,
+        message : msg ,
+        timestamps : new Date()
+    }
+    const newChat = new Chat(userDetails);
+    newChat.save();
+   
+    socket.broadcast.emit('newMsg' , userDetails)
+       
+    } )
 
     socket.on('disconnect', ()=>{
         console.log("Connection is disconnected");

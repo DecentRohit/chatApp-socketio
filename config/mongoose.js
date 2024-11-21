@@ -18,6 +18,6 @@ const connectUsingMongoose = async ()=>{
  }
  }
  const getdb = ()=>{
-    return client.db;
+    return client.db(); //db.collection('name') will lead to particular collection
  }
  module.exports = { connectUsingMongoose, getdb };
