@@ -25,8 +25,12 @@ const io = new Server(server, {
     }
 });
     
-io.on('connect', (socket)=>{
+io.on('connection', (socket)=>{
     console.log("Connection is established");
+
+    io.on('join' , (name)=>{
+        socket.broadcast.emit('userJoined')
+    })
 
     socket.on('disconnect', ()=>{
         console.log("Connection is disconnected");
