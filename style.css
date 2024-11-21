@@ -1,20 +1,32 @@
 #container{
-   text-align: center;
+  
    width: 500px;
    height: 600px;
+   box-sizing: border-box;
    background-color: aquamarine;
 }
 #chatter{
     width: 100%;
-    height: 10%;
+    height: 5%;
     background-color: rgb(178, 83, 83);
-    text-align:inherit;
+    text-align:center;
   
 }
 #msgArea{
     width: 100%;
     height: 80%;
     background-color: bisque;
+    overflow-y: auto; /* Adds a vertical scrollbar if content exceeds height */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+#msgArea p{
+    display: block;
+    padding: 0 10px;
+    margin-right: 0;
+}
+#msgArea div{
+    padding: 0 10px;
+    margin-left: 0;
 }
 #sendMsg {
     width: 100%;

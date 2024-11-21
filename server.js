@@ -32,8 +32,15 @@ io.on('connection', (socket)=>{
 
     socket.on('join' , (username)=>{
         socket.user = username;
+      
 
         socket.broadcast.emit('userJoined' , username)
+        Chat.find().sort({ timestamp: 1 }).limit(50)
+        .then(messages => {
+            socket.emit('load_messages', messages);
+        }).catch(err => {
+            console.log(err);
+        })
     })
     socket.on('message' ,(msg) =>{
     let userDetails = {

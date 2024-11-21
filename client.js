@@ -23,7 +23,14 @@ sendBtn.addEventListener('click' , (event)=>{
    msgArea.appendChild(newP)
     typeMsg.value="";
 })
-
+socket.on('load_messages' ,  (msgArray)=>{
+  msgArray.forEach(message => {
+    const messageElement = document.createElement("div");
+    messageElement.innerText = new Date(message.timestamps).toDateString() + "-" + message.name + ":" + message.message;
+    msgArea.appendChild(messageElement);
+    
+  });
+})
 
 socket.on('userJoined', (data) => {
     // Create a new p element
