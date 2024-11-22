@@ -23,7 +23,8 @@ sendBtn.addEventListener('submit', (event) => {
   const newP = document.createElement('span');
   // Set the text content of the p element
   newP.id = "mine"
-  newP.textContent = `${typeMsg.value} : ${new Date().toLocaleTimeString()}`;
+  newP.innerHTML = `${typeMsg.value} <br> <span style="font-size: 9px">${new Date().toLocaleTimeString()}</span>`;
+  
   msgArea.appendChild(newP)
   const newLine = document.createElement('br')
   msgArea.appendChild(newLine);
