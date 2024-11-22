@@ -12,13 +12,18 @@ msgArea.appendChild(newP)
 
 socket.emit('join', username)
 
-sendBtn.addEventListener('click', (event) => {
+sendBtn.addEventListener('submit', (event) => {
   event.preventDefault()
+  const input = typeMsg.value.trim();
+  if (!input) {
+     
+      alert("Input cannot be empty!");
+  }
   socket.emit('message', typeMsg.value)
-  const newP = document.createElement('p');
+  const newP = document.createElement('span');
   // Set the text content of the p element
   newP.id = "mine"
-  newP.textContent = `YOU : ${typeMsg.value} : ${new Date().toLocaleTimeString()}`;
+  newP.textContent = `${typeMsg.value} : ${new Date().toLocaleTimeString()}`;
   msgArea.appendChild(newP)
   const newLine = document.createElement('br')
   msgArea.appendChild(newLine);
