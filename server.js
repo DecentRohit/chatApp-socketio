@@ -46,7 +46,7 @@ io.on('connection', (socket)=>{
     let userDetails = {
         name : socket.user ,
         message : msg ,
-        timestamps : new Date()
+        timestamp : new Date()
     }
     const newChat = new Chat(userDetails);
     newChat.save();
