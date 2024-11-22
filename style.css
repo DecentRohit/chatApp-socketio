@@ -52,7 +52,25 @@ body, html {
         border-radius: 5px; /* Optional: Rounded corners */
   
 }
-
+#name {
+    background-color: rgb(27, 28, 30);
+    color: rgb(235, 251, 247); /* White text */
+    border-radius: 5px;
+    padding: 2px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+#oldermsg {
+    font-family:'Times New Roman', Times, serif
+}
+#old{
+    display: inline-block;
+    background-color: rgb(217, 218, 174);
+    color: rgb(21, 20, 20); /* White text */
+        padding: 5px 10px; /* Space inside the background */
+        margin: 5px 0; /* Space between paragraphs */
+        border-radius: 5px; /* Optional: Rounded corners */
+  
+}
 #mine{
     display: inline-block;
     background-color: #274a43;
@@ -67,6 +85,7 @@ body, html {
  
     background-color: rgb(211, 219, 62);
    text-align: center;
+   border-radius: 4px;
 }
 
 /* Input Area */

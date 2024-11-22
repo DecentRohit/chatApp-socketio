@@ -34,7 +34,10 @@ sendBtn.addEventListener('submit', (event) => {
 socket.on('load_messages', (msgArray) => {
   msgArray.forEach(message => {
     const messageElement = document.createElement("div");
-    messageElement.innerText = new Date(message.timestamp).toDateString() + "-" + message.name + ":" + message.message;
+    messageElement.id="old";
+    messageElement.innerHTML = `<span style="font-size: 9px">${new Date(message.timestamp).toDateString()}</span > 
+                               - <span id="name">${message.name} </span> :
+                                <span id="oldermsg">${message.message}</span>`
     msgArea.appendChild(messageElement);
     const newLine = document.createElement('br')
     msgArea.appendChild(newLine);
