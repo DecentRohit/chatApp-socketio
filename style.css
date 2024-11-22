@@ -1,35 +1,109 @@
-#container{
-  
-   width: 500px;
-   height: 600px;
-   box-sizing: border-box;
-   background-color: aquamarine;
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
 }
-#chatter{
+
+#container {
     width: 100%;
-    height: 5%;
-    background-color: rgb(178, 83, 83);
-    text-align:center;
+    max-width: 600px; /* Restrict the chat app width */
+    margin: 20px auto; /* Center horizontally */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    height: 80vh; /* Occupy 80% of viewport height */
+}
+
+/* Header Section */
+#chatter {
+    background-color: #007BFF; /* Blue header */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    height: 20px;
+    font-size: 1.2rem;
+   
   
 }
-#msgArea{
-    width: 100%;
-    height: 80%;
-    background-color: bisque;
-    overflow-y: auto; /* Adds a vertical scrollbar if content exceeds height */
-    overflow-x: hidden; /* Prevents horizontal scrolling */
+#chatter h2{
+    margin: -3px 0;
 }
-#msgArea p{
-    display: block;
-    padding: 0 10px;
-    margin-right: 0;
+
+/* Message Display Area */
+#msgArea {
+    
+    flex: 1; /* Takes up remaining space */
+    overflow-y: auto; /* Add scrollbar if messages overflow */
+    padding: 10px;
+    background-color: #f9f9f9; /* Light background for messages */
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
-#msgArea div{
-    padding: 0 10px;
-    margin-left: 0;
+ #other{
+    display: inline-block;
+    background-color: rgb(127, 170, 243);
+    color: rgb(21, 20, 20); /* White text */
+        padding: 5px 10px; /* Space inside the background */
+        margin: 5px 0; /* Space between paragraphs */
+        border-radius: 5px; /* Optional: Rounded corners */
+   text-align: left;
 }
+#join {
+ 
+    background-color: rgb(211, 219, 62);
+   text-align: center;
+}
+#mine{
+    display: inline-block; /* Shrinks the background to wrap text */
+        background-color: #274a43; /* Blue background */
+        color: white; /* White text */
+        padding: 5px 10px; /* Space inside the background */
+        margin: 5px 0; /* Space between paragraphs */
+        border-radius: 5px; /* Optional: Rounded corners */
+        text-align: right;
+ }
+
+/* Input Area */
 #sendMsg {
-    width: 100%;
-    height: 10%;
-    background-color: rgb(186, 221, 221);
+    padding: 10px;
+    background-color: #fff;
+}
+
+#sendMsg form {
+    display: flex; /* Align items in a row */
+    gap: 10px; /* Space between input and button */
+}
+
+#typedMsg {
+    flex: 1; /* Input takes up most of the space */
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#typedMsg:focus {
+    border-color: #007BFF;
+}
+
+#sent {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#sent:hover {
+    background-color: #0056b3;
 }

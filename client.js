@@ -19,8 +19,12 @@ sendBtn.addEventListener('click' , (event)=>{
     socket.emit('message', typeMsg.value)
     const newP = document.createElement('p');
     // Set the text content of the p element
+    newP.id = "mine"
    newP.textContent = `YOU : ${typeMsg.value} : ${new Date().toLocaleTimeString()}`;
    msgArea.appendChild(newP)
+   const newLine = document.createElement('br')
+   msgArea.appendChild(newLine);
+   msgArea.scrollTop = msgArea.scrollHeight;
     typeMsg.value="";
 })
 socket.on('load_messages' ,  (msgArray)=>{
@@ -28,6 +32,9 @@ socket.on('load_messages' ,  (msgArray)=>{
     const messageElement = document.createElement("div");
     messageElement.innerText = new Date(message.timestamps).toDateString() + "-" + message.name + ":" + message.message;
     msgArea.appendChild(messageElement);
+    const newLine = document.createElement('br')
+    msgArea.appendChild(newLine);
+   
     
   });
 })
@@ -35,6 +42,7 @@ socket.on('load_messages' ,  (msgArray)=>{
 socket.on('userJoined', (data) => {
     // Create a new p element
     const newP = document.createElement('p');
+    newP.id = "join";
      // Set the text content of the p element
     newP.textContent = `${data} has joined the chat`;
     msgArea.appendChild(newP)
@@ -47,8 +55,12 @@ socket.on('newMsg', (data) => {
     // const time = stringtime.isoString.slice(11, 19)
  
     const newP = document.createElement('p');
+    newP.id = "other"
      // Set the text content of the p element
     newP.textContent = `${name} : ${message} : ${new Date().toLocaleTimeString()}`;
  
     msgArea.appendChild(newP)
+    const newLine = document.createElement('br')
+    msgArea.appendChild(newLine);
+    msgArea.scrollTop = msgArea.scrollHeight;
 })
