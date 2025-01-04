@@ -5,18 +5,20 @@ const sendBtn = document.getElementById('sent')
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("toggle-btn");
 
+const userName= prompt('enter your name')
+const newP = document.createElement('p');
+// Set the text content of the p element
+newP.textContent = `Chat name : ${userName}`;
+msgArea.appendChild(newP)
+
+socket.emit('join', userName)
+
+
 toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("expanded"); // Toggles the expanded class
 });
 
 
-const username = prompt('Enter name')
-const newP = document.createElement('p');
-// Set the text content of the p element
-newP.textContent = `Chat name : ${username}`;
-msgArea.appendChild(newP)
-
-socket.emit('join', username)
 
 
 

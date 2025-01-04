@@ -8,6 +8,7 @@
     "start": "node server.js"
   },
   "author": "DecentRohit",
+    "type": "module",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

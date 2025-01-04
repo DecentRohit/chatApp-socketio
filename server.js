@@ -1,16 +1,12 @@
-const dotenv = require('dotenv')
+import dotenv from 'dotenv'
 dotenv.config();
-const { connectUsingMongoose } = require('./config/mongoose');
-const express = require('express');
+import { connectUsingMongoose, getdb } from './config/mongoose.js';
+import express from 'express';
 const app = express();
-const cors = require('cors');
-const { Server } = require('socket.io')
-const { getdb } = require('./config/mongoose');
-const Chat = require('./schema/chatSchema')
+import cors from 'cors';
+import { Server } from 'socket.io';
+import Chat from './schema/chatSchema.js';
 const PORT = process.env.PORT;
-const http = require('http');
-const { timeStamp } = require('console');
-const path = require('path');
 
 
 // Start the server
@@ -19,14 +15,21 @@ const server = app.listen(PORT, () => {
     console.log("Server is listening at port 3000")
 })
 
-
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
 
-// Define routes (if needed)
+
+// Handle the form submission and show the main page
 app.get('/', (req, res) => {
-    res.send("<h1>Server is up and runnig, Start Chatting by opening UI.html in web browser<h1>")
+
+
+    res.send(` <h1>Hello, User!</h1>
+                <p>Welcome to the main page.</p>
+                <h3>Server is up and runnig, Start Chatting by opening UI.html in web browser<h3>`
+            );
 });
+
 const onlineUsers = new Map(); // Keep track of online users
 const io = new Server(server, {
     cors: {
@@ -36,16 +39,16 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log("Connection is established" , socket.id);
-    
+    console.log("Connection is established", socket.id);
+
 
     socket.on('join', (username) => {
         onlineUsers.set(socket.id, username);
         socket.user = username;
-       
+
         const live = Array.from(onlineUsers.values());
         console.log(live)
-       const data = { username , live}
+        const data = { username, live }
 
         socket.broadcast.emit('userJoined', data)
         Chat.find().sort({ timestamp: 1 }).limit(50)
@@ -54,7 +57,7 @@ io.on('connection', (socket) => {
             }).catch(err => {
                 console.log(err);
             })
-            socket.emit("updateOnline", Array.from(onlineUsers.values()));
+        socket.emit("updateOnline", Array.from(onlineUsers.values()));
     })
     socket.on('typing', (data) => {
         socket.broadcast.emit('typing', data); // Broadcast to all except the sender
@@ -84,8 +87,6 @@ io.on('connection', (socket) => {
         console.log("Connection is disconnected");
     })
 });
-
-
 
 
 
