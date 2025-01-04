@@ -6,8 +6,8 @@ const app = express();
 import cors from 'cors';
 import { Server } from 'socket.io';
 import Chat from './schema/chatSchema.js';
+import path from 'path';
 const PORT = process.env.PORT;
-
 
 // Start the server
 const server = app.listen(PORT, () => {
@@ -15,7 +15,6 @@ const server = app.listen(PORT, () => {
     console.log("Server is listening at port 3000")
 })
 
-app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
 
@@ -26,7 +25,7 @@ app.get('/', (req, res) => {
 
     res.send(` <h1>Hello, User!</h1>
                 <p>Welcome to the main page.</p>
-                <h3>Server is up and runnig, Start Chatting by opening UI.html in web browser<h3>`
+                <h3>Server is up and runnig,open UI.html to start chatting<h3>`
             );
 });
 

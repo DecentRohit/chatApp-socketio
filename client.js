@@ -129,7 +129,7 @@ const typingIndicator = document.getElementById('typingIndicator');
 // Emit typing event when user types
 messageInput.addEventListener('input', () => {
   if (messageInput.value.trim()) {
-    socket.emit('typing' , username);
+    socket.emit('typing' , userName);
   } else {
     socket.emit('stopTyping');
   }
