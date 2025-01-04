@@ -24,7 +24,7 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
 
 // Define routes (if needed)
 app.get('/', (req, res) => {
-    res.render('UI');
+    res.sendFile('UI.html');
 });
 const onlineUsers = new Map(); // Keep track of online users
 const io = new Server(server, {
