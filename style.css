@@ -5,7 +5,9 @@ body, html {
     font-family: Arial, sans-serif;
     box-sizing: border-box;
 }
-
+h1{
+    text-align: center;
+}
 #container {
     width: 100%;
     max-width: 600px; /* Restrict the chat app width */

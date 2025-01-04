@@ -7,7 +7,7 @@ const sendBtn = document.getElementById('sent')
 const username = prompt('Enter name')
 const newP = document.createElement('p');
 // Set the text content of the p element
-newP.textContent = `Welcome ${username}`;
+newP.textContent = `Chat name : ${username}`;
 msgArea.appendChild(newP)
 
 socket.emit('join', username)
@@ -65,7 +65,7 @@ socket.on('newMsg', (data) => {
   const newP = document.createElement('p');
   newP.id = "other"
   // Set the text content of the p element
-  newP.textContent = `${name} : ${message} : ${new Date().toLocaleTimeString()}`;
+  newP.innerHTML = `<span id="name">${name} </span> : ${message} <span style="font-size: 9px"> <br>${new Date().toLocaleTimeString()}</span>`;
 
   msgArea.appendChild(newP)
   const newLine = document.createElement('br')
