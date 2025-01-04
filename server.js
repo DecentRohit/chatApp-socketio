@@ -10,6 +10,7 @@ const Chat = require('./schema/chatSchema')
 const PORT = process.env.PORT;
 const http = require('http');
 const { timeStamp } = require('console');
+const path = require('path');
 
 
 // Start the server
@@ -24,7 +25,7 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST'] }));
 
 // Define routes (if needed)
 app.get('/', (req, res) => {
-    res.sendFile('UI.html');
+    res.send("<h1>Server is up and runnig, Start Chatting by opening UI.html in web browser<h1>")
 });
 const onlineUsers = new Map(); // Keep track of online users
 const io = new Server(server, {
