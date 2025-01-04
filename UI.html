@@ -9,12 +9,28 @@
 </head>
 
 <body>
+    <aside>
+        <div class="sidebar" id="sidebar">
+            <button class="toggle-btn" id="toggle-btn"><img src="https://cdn-icons-png.flaticon.com/128/9692/9692032.png" style="width: 60px;"></button>
+            <div class="menu">
+                <h3>Online</h3>
+                <ul id="online">
+                 
+                </ul>
+         
+            </div>
+        </div>
+
+    </aside>
+   
+<main>
     <h1>Welcome to the Chat</h1>
     <div id="container">
         <div id="chatter">
             <h2>Chat with Friends</h2>
         </div>
         <div id="msgArea"></div>
+        <p id="typingIndicator" style="color: gray; display: none;"></p>
         <div id="sendMsg">
             <form id="sent">
                 <label for="typedMsg">Start Chat</label>
@@ -24,6 +40,8 @@
           
         </div>
     </div>
+</main>
+   
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script src="client.js"></script>
 </body>
