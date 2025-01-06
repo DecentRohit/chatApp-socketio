@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     res.send(` <h1>Hello, User!</h1>
                 <p>Welcome to the main page.</p>
                 <h3>Server is up and runnig,open UI.html to start chatting<h3>`
-            );
+    );
 });
 
 const onlineUsers = new Map(); // Keep track of online users
@@ -38,15 +38,17 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
+    let user;
     console.log("Connection is established", socket.id);
 
 
     socket.on('join', (username) => {
+        console.log("name", username)
+
         onlineUsers.set(socket.id, username);
-        socket.user = username;
+        user = username;
 
         const live = Array.from(onlineUsers.values());
-        console.log(live)
         const data = { username, live }
 
         socket.broadcast.emit('userJoined', data)
@@ -67,7 +69,7 @@ io.on('connection', (socket) => {
     });
     socket.on('message', (msg) => {
         let userDetails = {
-            name: socket.user,
+            name: user,
             message: msg,
             timestamp: new Date()
         }
@@ -81,7 +83,11 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         onlineUsers.delete(socket.id);
         socket.emit("updateOnline", Array.from(onlineUsers.values()));
-        socket.broadcast.emit('userLeft', socket.user)
+
+        const live = Array.from(onlineUsers.values());
+
+        const data = { user, live }
+        socket.broadcast.emit('userLeft', data)
 
         console.log("Connection is disconnected");
     })

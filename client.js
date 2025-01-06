@@ -4,37 +4,50 @@ const typeMsg = document.getElementById('typedMsg')
 const sendBtn = document.getElementById('sent')
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("toggle-btn");
+let username;
+function submitName() {
+  const nameInput = document.getElementById('nameInput').value.trim();
+  console.log(nameInput);
+  if (nameInput) {
 
-const userName= prompt('enter your name')
-const newP = document.createElement('p');
-// Set the text content of the p element
-newP.textContent = `Chat name : ${userName}`;
-msgArea.appendChild(newP)
+    // Hide the popup and show the main content
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    const userName = nameInput;
+    username=userName;
 
-socket.emit('join', userName)
+    const newP = document.createElement('p');
+    // Set the text content of the p element
+    newP.textContent = `Chat name : ${userName}`;
+    msgArea.appendChild(newP)
+
+    socket.emit('join', userName)
+  } else {
+    alert('Name cannot be empty. Please try again.');
+  }
+}
+
+
 
 
 toggleBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("expanded"); // Toggles the expanded class
+  sidebar.classList.toggle("expanded"); // Toggles the expanded class
 });
-
-
-
 
 
 sendBtn.addEventListener('submit', (event) => {
   event.preventDefault()
   const input = typeMsg.value.trim();
   if (!input) {
-     
-      alert("cannot send empty message!");
+
+    alert("cannot send empty message!");
   }
   socket.emit('message', typeMsg.value)
   const newP = document.createElement('span');
   // Set the text content of the p element
   newP.id = "mine"
   newP.innerHTML = `${typeMsg.value} <br> <span style="font-size: 9px">${new Date().toLocaleTimeString()}</span>`;
-  
+
   msgArea.appendChild(newP)
   socket.emit('stopTyping');
   msgArea.scrollTop = msgArea.scrollHeight;
@@ -45,13 +58,13 @@ socket.on('load_messages', (messages) => {
 
   messages.forEach(message => {
     const messageElement = document.createElement("div");
-    messageElement.id="old";
+    messageElement.id = "old";
     messageElement.innerHTML = `<span style="font-size: 9px">${new Date(message.timestamp).toDateString()}</span > 
                                - <span id="name">${message.name} </span> :
                                 <span id="oldermsg">${message.message}</span>`
     msgArea.appendChild(messageElement);
     const ul = document.getElementById("online");
-  
+
 
 
 
@@ -65,34 +78,38 @@ socket.on('userJoined', (data) => {
   // Set the text content of the p element
   newP.textContent = `${data.username} has joined the chat`;
   msgArea.appendChild(newP)
-
+  const count = document.getElementById("onlineCount");
+  count.textContent = data.live.length;
   const ul = document.getElementById("online");
   ul.innerHTML = '';
   data.live.forEach((user) => {
-     // Create a new li element
-  const li = document.createElement("li");
-  li.textContent = user;
-  li.id = user;
-  
-  // Append the li to the ul
-  ul.appendChild(li);
-  
+    // Create a new li element
+    const li = document.createElement("li");
+    li.textContent = user;
+    li.id = user;
+
+    // Append the li to the ul
+    ul.appendChild(li);
+
   })
   msgArea.scrollTop = msgArea.scrollHeight;
-  
+
 })
 socket.on('updateOnline', (users) => {
   const ul = document.getElementById("online");
   ul.innerHTML = '';
   users.forEach((user) => {
-     // Create a new li element
-  const li = document.createElement("li");
-  li.textContent = user;
-  li.id = user;
-  
-  // Append the li to the ul
-  ul.appendChild(li);
+    // Create a new li element
+    const li = document.createElement("li");
+    li.textContent = user;
+    li.id = user;
+
+    // Append the li to the ul
+    ul.appendChild(li);
+
   });
+  const count = document.getElementById("onlineCount");
+  count.textContent = users.length;
 });
 socket.on('newMsg', (data) => {
   // Create a new p element
@@ -110,15 +127,17 @@ socket.on('newMsg', (data) => {
   msgArea.scrollTop = msgArea.scrollHeight;
 })
 socket.on('userLeft', (data) => {
-  console.log("userleft" ,data)
   const newP = document.createElement('p');
   newP.id = "left";
   // Set the text content of the p element
-  newP.textContent = `${data} has left the chat`;
+  newP.textContent = `${data.user} has left the chat`;
   msgArea.appendChild(newP)
-  
-const left = document.getElementById(data)
-left.remove();
+
+  const left = document.getElementById(data.user)
+  left.remove();
+  const count = document.getElementById("onlineCount");
+  count.textContent = data.live.length;
+
 
 })
 
@@ -129,7 +148,7 @@ const typingIndicator = document.getElementById('typingIndicator');
 // Emit typing event when user types
 messageInput.addEventListener('input', () => {
   if (messageInput.value.trim()) {
-    socket.emit('typing' , userName);
+    socket.emit('typing', username);
   } else {
     socket.emit('stopTyping');
   }
