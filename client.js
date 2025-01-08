@@ -51,19 +51,20 @@ sendBtn.addEventListener('submit', (event) => {
   const newP = document.createElement('div');
   newP.id = "mine"
   newP.innerHTML = `${typeMsg.value} <br> <span style="font-size: 9px">${new Date().toLocaleTimeString()}</span>`;
-
-
+  const img = document.createElement("img");
+  img.src = mydp; // Set the source of the image
+ newP.appendChild(img)
   msgArea.appendChild(newP);
   // Select all elements with the same id
   const divs = document.querySelectorAll("#mine");
 
-  // Select the last one
-  const lastDiv = divs[divs.length - 1];
-  const img = document.createElement("img");
-  img.src = mydp; // Set the source of the image
+  // // Select the last one
+  // const lastDiv = divs[divs.length - 1];
+  // const img = document.createElement("img");
+  // img.src = mydp; // Set the source of the image
 
-  // Insert the <img> before the <div>
-  lastDiv.parentNode.insertBefore(img, lastDiv);
+  // // Insert the <img> before the <div>
+  // lastDiv.parentNode.insertBefore(img, lastDiv);
   // msgArea.appendChild(dp)
   socket.emit('stopTyping');
   msgArea.scrollTop = msgArea.scrollHeight;
