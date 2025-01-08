@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lets chat</title>
     <link rel="stylesheet" href="style.css">
+    <!-- <style>
+        #mine::before {
+            content: url('https://cdn-icons-png.flaticon.com/128/6861/6861362.png');
+            color: blue;
+            font-weight: bold;
+        }
+
+        #other::after {
+            content: " After Content";
+            color: red;
+            font-style: italic;
+        }
+    </style> -->
 </head>
 
 <body>
@@ -27,9 +40,27 @@
     <!-- Popup Box -->
     <div id="popup">
         <div id="popup-box">
+       
             <h2>Enter Your Name</h2>
             <form onsubmit="submitName(); return false;">
                 <input type="text" id="nameInput" placeholder="Your name" />
+                <h2>Select your dp</h2>
+                <div class="dp-container">
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825051.png" alt="DP1"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825112.png" alt="DP2"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825096.png" alt="DP3"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825044.png" alt="DP4"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825015.png" alt="DP5"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825087.png" alt="DP5"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825027.png" alt="DP5"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/4825/4825076.png" alt="DP5"></div>
+                    <div><img src="https://cdn-icons-png.flaticon.com/256/8360/8360529.png" alt="DP5"></div>
+                </div>
+            
+                <div class="selected-dp">
+                    <p>Your selected DP:</p>
+                    <img id="selectedImage" src="https://cdn-icons-png.flaticon.com/128/685/685686.png" alt="Selected DP">
+                </div>
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -54,7 +85,19 @@
         </div>
     </main>
     <script>
+const dpContainer = document.querySelector('.dp-container');
+    const selectedImage = document.getElementById('selectedImage');
+    dpContainer.addEventListener('click', (event) => {
+      if (event.target.tagName === 'IMG') {
+          // Remove 'selected' class from all images
+          document.querySelectorAll('.dp-container div').forEach(div => div.classList.remove('selected'));
 
+          // Add 'selected' class to the clicked image's parent div
+          event.target.parentElement.classList.add('selected');
+
+          // Update the displayed selected DP
+          selectedImage.src = event.target.src;
+      }})
     </script>
 
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>

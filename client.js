@@ -5,23 +5,28 @@ const sendBtn = document.getElementById('sent')
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("toggle-btn");
 let username;
+let mydp;
 function submitName() {
   const nameInput = document.getElementById('nameInput').value.trim();
   console.log(nameInput);
   if (nameInput) {
 
+    const selectedImage = document.getElementById('selectedImage');
+    mydp = selectedImage.src;
+
     // Hide the popup and show the main content
     document.getElementById('popup').style.display = 'none';
     document.getElementById('content').style.display = 'block';
     const userName = nameInput;
-    username=userName;
+    username = userName;
+
 
     const newP = document.createElement('p');
     // Set the text content of the p element
     newP.textContent = `Chat name : ${userName}`;
     msgArea.appendChild(newP)
 
-    socket.emit('join', userName)
+    socket.emit('join', { userName, mydp })
   } else {
     alert('Name cannot be empty. Please try again.');
   }
@@ -43,12 +48,23 @@ sendBtn.addEventListener('submit', (event) => {
     alert("cannot send empty message!");
   }
   socket.emit('message', typeMsg.value)
-  const newP = document.createElement('span');
-  // Set the text content of the p element
+  const newP = document.createElement('div');
   newP.id = "mine"
   newP.innerHTML = `${typeMsg.value} <br> <span style="font-size: 9px">${new Date().toLocaleTimeString()}</span>`;
 
-  msgArea.appendChild(newP)
+
+  msgArea.appendChild(newP);
+  // Select all elements with the same id
+  const divs = document.querySelectorAll("#mine");
+
+  // Select the last one
+  const lastDiv = divs[divs.length - 1];
+  const img = document.createElement("img");
+  img.src = mydp; // Set the source of the image
+
+  // Insert the <img> before the <div>
+  lastDiv.parentNode.insertBefore(img, lastDiv);
+  // msgArea.appendChild(dp)
   socket.emit('stopTyping');
   msgArea.scrollTop = msgArea.scrollHeight;
   typeMsg.value = "";
@@ -76,7 +92,7 @@ socket.on('userJoined', (data) => {
   const newP = document.createElement('p');
   newP.id = "join";
   // Set the text content of the p element
-  newP.textContent = `${data.username} has joined the chat`;
+  newP.textContent = `${data.user} has joined the chat`;
   msgArea.appendChild(newP)
   const count = document.getElementById("onlineCount");
   count.textContent = data.live.length;
@@ -112,17 +128,16 @@ socket.on('updateOnline', (users) => {
   count.textContent = users.length;
 });
 socket.on('newMsg', (data) => {
-  // Create a new p element
+  console.log(data)
+  const { name, message, avatar } = data;
 
-  const { name, message } = data;
-
-  // const time = stringtime.isoString.slice(11, 19)
-
+  const dp = document.createElement('img');
+  dp.src = avatar
   const newP = document.createElement('p');
   newP.id = "other"
   // Set the text content of the p element
   newP.innerHTML = `<span id="name">${name} </span> : ${message} <span style="font-size: 9px"> <br>${new Date().toLocaleTimeString()}</span>`;
-
+   newP.appendChild(dp)
   msgArea.appendChild(newP)
   msgArea.scrollTop = msgArea.scrollHeight;
 })

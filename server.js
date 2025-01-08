@@ -39,19 +39,22 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     let user;
+    let dp;
     console.log("Connection is established", socket.id);
 
 
-    socket.on('join', (username) => {
-        console.log("name", username)
+    socket.on('join', (data) => {
+        dp = data.mydp;
+        user = data.userName;
+        console.log("name", user)
 
-        onlineUsers.set(socket.id, username);
-        user = username;
+        onlineUsers.set(socket.id,user);
+     
 
         const live = Array.from(onlineUsers.values());
-        const data = { username, live }
+        const details = { user, live }
 
-        socket.broadcast.emit('userJoined', data)
+        socket.broadcast.emit('userJoined', details)
         Chat.find().sort({ timestamp: 1 }).limit(50)
             .then(messages => {
                 socket.emit('load_messages', messages);
@@ -68,6 +71,7 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('stopTyping');
     });
     socket.on('message', (msg) => {
+   
         let userDetails = {
             name: user,
             message: msg,
@@ -75,8 +79,15 @@ io.on('connection', (socket) => {
         }
         const newChat = new Chat(userDetails);
         newChat.save();
-
-        socket.broadcast.emit('newMsg', userDetails)
+        //  const msgAndDp = {user , msg , dp}
+        //  console.log(msgAndDp)
+        console.log(dp)
+        let userData= {
+            name: user,
+            message: msg,
+          avatar :dp
+        }
+        socket.broadcast.emit('newMsg', userData)
 
     })
 

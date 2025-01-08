@@ -1,0 +1,39 @@
+#msgArea {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adds space between messages */
+    width: 100%; /* Chat box width */
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow-y: auto; /* Allows scrolling if messages overflow */
+    height: 400px; /* Fixed height */
+}
+#mine{
+    /* position: relative;
+    right: 0;
+    background-color: #196f5e;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px 0px;
+    margin-top: 20px;
+    border-radius: 5px; */
+    align-self: flex-end; /* Aligns the message to the right */
+    background-color: #196f5e;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 80%;
+    text-align: left;
+    /* display: inline-block; //Change to inline-block to stay on the same line 
+    margin-left: 10px; //Add spacing between the image and the div */
+  
+ }
+ #msgArea img{
+    align-self: flex-end; /* Aligns the message to the right */
+    padding: 10px 15px;
+    max-width: 80%;
+    width: 40px;
+    display: inline-block; /* Ensure the image behaves like an inline-block */
+    vertical-align: middle; /* Align the image vertically with the text */
+ }
